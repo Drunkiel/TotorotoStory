@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,7 +10,9 @@ public class PlayerStatsController : MonoBehaviour
     public int maxEnergyReserve;
 
     public Slider healthSlider;
+    public TMP_Text healthPercent;
     public Slider energySlider;
+    public TMP_Text energyPercent;
 
     PlayerSkillsController _skillsController;
 
@@ -31,6 +34,7 @@ public class PlayerStatsController : MonoBehaviour
     void UpdateHealth()
     {
         healthSlider.value = health;
+        healthPercent.text = Mathf.Round(health / maxHealth * 100).ToString() + "%";
     }
 
     void UpdateEnergy()
@@ -39,5 +43,6 @@ public class PlayerStatsController : MonoBehaviour
         if (_skillsController.isNightVisionOn) energyReserve -= Time.deltaTime * 2;
 
         energySlider.value = energyReserve;
+        energyPercent.text = Mathf.Round(energyReserve / maxEnergyReserve * 100).ToString() + "%";
     }
 }
