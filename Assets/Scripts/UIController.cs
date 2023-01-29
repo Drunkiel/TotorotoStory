@@ -9,5 +9,8 @@ public class UIController : MonoBehaviour
     {
         isUIOpen = !isUIOpen;
         UI.SetActive(isUIOpen);
+
+        if (isUIOpen) Cursor.lockState = CursorLockMode.None;
+        else Cursor.lockState = CursorLockMode.Locked;
     }
 }
