@@ -5,6 +5,7 @@ public class PlayerController : MonoBehaviour
     public float speedForce;
     public float rotationForce;
     private float yRotation;
+    public static bool stopPlayer;
 
     public Transform groundTester;
     public float radius;
@@ -30,10 +31,13 @@ public class PlayerController : MonoBehaviour
         else onTheGround = false;
 
         if (onTheGround) velocity.y = 0f;
-
-        Movement();
         if (!onTheGround) Gravity();
-        Rotate();
+
+        if (!stopPlayer)
+        {
+            Movement();
+            Rotate();
+        }
     }
 
     void Movement()
