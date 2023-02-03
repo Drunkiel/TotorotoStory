@@ -32,11 +32,12 @@ public class UpgradeController : MonoBehaviour
 
             _statsController.coins -= _item.price;
             _item.boughtUpgrades++;
+            ConsoleController.SendTextConsole("Succesfully upgraded");
         }
         else
         {
-            if (_item.boughtUpgrades >= _item.maxUpgrade) print("Max Upgraded");
-            if (_statsController.coins < _item.price) print("Not enough coins");
+            if (_item.boughtUpgrades >= _item.maxUpgrade) ConsoleController.SendTextConsole("Max upgrade reached");
+            if (_statsController.coins < _item.price) ConsoleController.SendTextConsole("Not enought coins");
         }
     }
 
@@ -45,11 +46,15 @@ public class UpgradeController : MonoBehaviour
         PlayerUpgrades.energyPoints++;
         _statsController.maxEnergyReserve += _item.value;
         _statsController.energySlider.maxValue = _statsController.maxEnergyReserve;
+
+        if (PlayerUpgrades.energyPoints > _item.maxUpgrade) PlayerUpgrades.energyPoints = _item.maxUpgrade;
     }
 
     void UpgradeCharging()
     {
         PlayerUpgrades.fastChargingPoints++;
+
+        if (PlayerUpgrades.fastChargingPoints > _item.maxUpgrade) PlayerUpgrades.fastChargingPoints = _item.maxUpgrade;
     }
 
     void SetValues()
