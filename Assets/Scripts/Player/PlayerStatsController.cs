@@ -4,10 +4,12 @@ using UnityEngine.UI;
 
 public class PlayerStatsController : MonoBehaviour
 {
-    public int health;
+    public float health;
     public int maxHealth;
     public float energyReserve;
     public int maxEnergyReserve;
+
+    public int coins;
 
     public Slider healthSlider;
     public TMP_Text healthPercent;
@@ -39,10 +41,18 @@ public class PlayerStatsController : MonoBehaviour
 
     void UpdateEnergy()
     {
-        if (_skillsController.isLightOn) energyReserve -= Time.deltaTime;
+        if (_skillsController.isLightOn) energyReserve -= Time.deltaTime * 1;
         if (_skillsController.isNightVisionOn) energyReserve -= Time.deltaTime * 2;
 
         energySlider.value = energyReserve;
         energyPercent.text = Mathf.Round(energyReserve / maxEnergyReserve * 100).ToString() + "%";
+    }
+
+    public void TakeDamage(int value)
+    {
+        health -= value;
+
+        if (health <= 0) health = maxHealth;
+        ConsoleController.SendTextConsole("Damage taken: " + value);
     }
 }

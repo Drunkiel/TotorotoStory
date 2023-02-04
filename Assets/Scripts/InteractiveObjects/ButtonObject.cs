@@ -15,7 +15,7 @@ public class ButtonObject : MonoBehaviour
         _triggerController = GetComponent<TriggerController>();
     }
 
-    private void OnMouseOver()
+    void OnMouseOver()
     {
         if (_triggerController.isTriggered) cursorToDisplay.SetActive(true);
         else cursorToDisplay.SetActive(false);
