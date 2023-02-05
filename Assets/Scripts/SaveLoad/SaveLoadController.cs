@@ -6,6 +6,7 @@ public class SaveLoadController : MonoBehaviour
     private string jsonSavePath;
     public PlayerData _playerData;
     PlayerStatsController _playerStats;
+    public MapController _mapController;
 
     void Awake()
     {
@@ -31,6 +32,7 @@ public class SaveLoadController : MonoBehaviour
         _playerData.coins = _playerStats.coins;
         _playerData.energyPoints = PlayerUpgrades.energyPoints;
         _playerData.chargingPoints = PlayerUpgrades.fastChargingPoints;
+        _playerData.lastMapEnded = _mapController.lastMapEnded;
 
         //Saving data
         string jsonData = JsonUtility.ToJson(_playerData, true);
@@ -48,6 +50,7 @@ public class SaveLoadController : MonoBehaviour
         _playerStats.coins = _playerData.coins;
         PlayerUpgrades.energyPoints = _playerData.energyPoints;
         PlayerUpgrades.fastChargingPoints = _playerData.chargingPoints;
+        _mapController.lastMapEnded = _playerData.lastMapEnded;
     }
 
     private string ReadFromFile()

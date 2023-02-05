@@ -46,6 +46,7 @@ public class UpgradeController : MonoBehaviour
         PlayerUpgrades.energyPoints++;
         _statsController.maxEnergyReserve += _item.value;
         _statsController.energySlider.maxValue = _statsController.maxEnergyReserve;
+        _statsController.energyReserve += _item.value;
 
         if (PlayerUpgrades.energyPoints > _item.maxUpgrade) PlayerUpgrades.energyPoints = _item.maxUpgrade;
     }

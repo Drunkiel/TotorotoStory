@@ -1,19 +1,16 @@
-using System.Linq;
 using UnityEngine;
 
 public class MapController : MonoBehaviour
 {
     public GameObject[] allMaps;
-    public bool[] pickedMaps;
-    public int[] restOfTheMaps;
+    public int lastMapEnded = -1;
+    public int nextMap;
 
     public DoorsController _doorsController;
-    public Transform placeToSpawn;
 
     void Start()
     {
-        pickedMaps = new bool[allMaps.Length];
-        Fill();
+        lastMapEnded = GameObject.Find("SaveLoad").GetComponent<SaveLoadController>()._playerData.lastMapEnded;
     }
 
     public void PickMap()
@@ -23,39 +20,15 @@ public class MapController : MonoBehaviour
         //Deleting map
         DestroyActualMap();
 
-        //Check if have been any maps left
-        if (restOfTheMaps.Length == 0) Fill();
+        nextMap = lastMapEnded + 1;
 
-        int ranNum = (int)Mathf.Round(Random.Range(0, restOfTheMaps.Length));
-
-        Instantiate(allMaps[restOfTheMaps[ranNum]], allMaps[restOfTheMaps[ranNum]].transform.position, allMaps[restOfTheMaps[ranNum]].transform.rotation);
-
-        restOfTheMaps = restOfTheMaps.Except(new int[] { restOfTheMaps[ranNum] }).ToArray();
-        ReFillMaps();
+        Instantiate(allMaps[nextMap], allMaps[nextMap].transform.position, allMaps[nextMap].transform.rotation);
     }
 
-    void ReFillMaps()
+    public void EndMap()
     {
-        for (int i = 0; i < pickedMaps.Length; i++)
-        {
-            pickedMaps[i] = true;
-
-            for (int j = 0; j < restOfTheMaps.Length; j++)
-            {
-                if (i == restOfTheMaps[j]) pickedMaps[i] = false;
-            }
-        }
-    }
-
-    void Fill()
-    {
-        restOfTheMaps = new int[allMaps.Length];
-
-        for (int i = 0; i < restOfTheMaps.Length; i++)
-        {
-            restOfTheMaps[i] = i;
-            pickedMaps[i] = false;
-        }
+        if (lastMapEnded < nextMap) lastMapEnded += 1;
+        else ConsoleController.SendTextConsole("The map has been completed!");
     }
 
     void DestroyActualMap()
@@ -64,7 +37,7 @@ public class MapController : MonoBehaviour
 
         foreach (GameObject map in maps)
         {
-            Destroy(map.transform.parent.gameObject);
+            Destroy(map);
         }
     }
 }
