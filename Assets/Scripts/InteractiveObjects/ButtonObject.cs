@@ -12,6 +12,8 @@ public class ButtonObject : MonoBehaviour
 
     void Start()
     {
+        if (cursorToDisplay == null) cursorToDisplay = GameObject.Find("Cursors").transform.GetChild(0).gameObject;
+
         _triggerController = GetComponent<TriggerController>();
     }
 
