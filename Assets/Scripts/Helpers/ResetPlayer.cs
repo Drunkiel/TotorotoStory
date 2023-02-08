@@ -12,6 +12,8 @@ public class ResetPlayer : MonoBehaviour
 
     public void ResetPosition()
     {
-        GameObject.FindGameObjectWithTag("Player").transform.position = newPosition.position;
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        player.transform.position = newPosition.position;
+        player.transform.rotation = newPosition.rotation;
     }
 }
